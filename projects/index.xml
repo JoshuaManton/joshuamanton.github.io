@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Joshua Manton</title>
+    <title>Projects on Joshua Manton</title>
     
     
     
-    <link>/</link>
-    <description>Recent content on Joshua Manton</description>
+    <link>/projects/</link>
+    <description>Recent content in Projects on Joshua Manton</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Oct 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -49,27 +49,6 @@ Basic Gameplay   The video above demonstrates the basic mechanics of the game. Y
         
           A toy compiler project I started working on mostly to learn how compilers work. Turns out they are complicated.
 This compiler implements a recursive-descent parser to parse source code into a syntax tree, typechecks the syntax tree and enforces the semantic rules of the language, generates an intermediate representation of the instruction stream and does register allocation, translates this intermediate representation to bytecode, and executes the bytecode in a virtual machine.
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          My name is Joshua Manton and I am a software developer living in Victoria, British Columbia.
-I started programming as a hobby in 2010 tinkering with Unity3D and it quickly became a passion, leading me to attend Camosun College in the Computer Systems Technology program after high school in 2014. As of 2020 I&amp;rsquo;ve been working professionally as a programmer for 4 years, working on competitive multiplayer mobile games, casual games, an augmented reality amusement park ride, and other location-based entertainment.
           
         
         </description>
