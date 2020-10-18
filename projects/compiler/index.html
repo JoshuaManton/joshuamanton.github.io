@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        Untitled Compiler ::
+        Compiler ::
         Joshua Manton
       </title>
     
@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="A toy compiler project I started working on mostly to learn how compilers work. Turns out they are complicated.
+  content="A toy compiler project I started working on mostly to learn how compilers work. The source code can be viewed here, with a demo of all features currently implemented here.
 This compiler implements a recursive-descent parser to parse source code into a syntax tree, typechecks the syntax tree and enforces the semantic rules of the language, generates an intermediate representation of the instruction stream and does register allocation, translates this intermediate representation to bytecode, and executes the bytecode in a virtual machine."
 />
 <meta
@@ -47,15 +47,21 @@ This compiler implements a recursive-descent parser to parse source code into a 
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Untitled Compiler"/>
-<meta name="twitter:description" content="A toy compiler project I started working on mostly to learn how compilers work. Turns out they are complicated.
-This compiler implements a recursive-descent parser to parse source code into a syntax tree, typechecks the syntax tree and enforces the semantic rules of the language, generates an intermediate representation of the instruction stream and does register allocation, translates this intermediate representation to bytecode, and executes the bytecode in a virtual machine."/>
+<meta name="twitter:title" content="Compiler"/>
+<meta name="twitter:description" content="A toy compiler project I started working on mostly to learn how compilers work.
+
+Source: https://github.com/JoshuaManton/lang.
+
+Demo: https://github.com/JoshuaManton/lang/blob/master/demo.lang"/>
 
 
 
-<meta property="og:title" content="Untitled Compiler" />
-<meta property="og:description" content="A toy compiler project I started working on mostly to learn how compilers work. Turns out they are complicated.
-This compiler implements a recursive-descent parser to parse source code into a syntax tree, typechecks the syntax tree and enforces the semantic rules of the language, generates an intermediate representation of the instruction stream and does register allocation, translates this intermediate representation to bytecode, and executes the bytecode in a virtual machine." />
+<meta property="og:title" content="Compiler" />
+<meta property="og:description" content="A toy compiler project I started working on mostly to learn how compilers work.
+
+Source: https://github.com/JoshuaManton/lang.
+
+Demo: https://github.com/JoshuaManton/lang/blob/master/demo.lang" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/projects/compiler/" />
 <meta property="article:published_time" content="2020-09-13T00:00:00+00:00" />
@@ -146,7 +152,7 @@ This compiler implements a recursive-descent parser to parse source code into a 
   
 
   <div class="post">
-    <h1 class="post-title">Untitled Compiler</h1>
+    <h1 class="post-title">Compiler</h1>
     <div class="post-meta">
       
         <span class="post-date">
@@ -169,7 +175,7 @@ This compiler implements a recursive-descent parser to parse source code into a 
     
       <figure class="post-cover">
         
-          <img src="/img/compiler.png" alt="Untitled Compiler" />
+          <img src="/img/compiler.png" alt="Compiler" />
         
 
         
@@ -178,32 +184,33 @@ This compiler implements a recursive-descent parser to parse source code into a 
 
     <div class="post-content">
       
-      <p>A toy compiler project I started working on mostly to learn how compilers work. Turns out they are complicated.</p>
+      <p>A toy compiler project I started working on mostly to learn how compilers work. The source code can be viewed <a href="https://github.com/JoshuaManton/lang">here</a>, with a demo of all features currently implemented <a href="https://github.com/JoshuaManton/lang/blob/master/demo.lang">here</a>.</p>
 <p>This compiler implements a recursive-descent parser to parse source code into a syntax tree, typechecks the syntax tree and enforces the semantic rules of the language, generates an intermediate representation of the instruction stream and does register allocation, translates this intermediate representation to bytecode, and executes the bytecode in a virtual machine.</p>
-<p>Given the following program:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> Vector3 {
-    x: <span style="color:#66d9ef">int</span>;
-    y: <span style="color:#66d9ef">int</span>;
-    z: <span style="color:#66d9ef">int</span>;
-}
-
-proc factorial(n: <span style="color:#66d9ef">int</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">int</span> {
+<p>Take the following classic factorial program:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;basic.lang&#34; // contains VM intrinsics for print() and assert()</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+proc <span style="color:#a6e22e">factorial</span>(n: <span style="color:#66d9ef">int</span>) <span style="color:#f92672">:</span> <span style="color:#66d9ef">int</span> {
     <span style="color:#66d9ef">if</span> (n <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
         <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
     }
     <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> factorial(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
 }
 
-proc main() {
-    var v: Vector3;
-    v.x <span style="color:#f92672">=</span> factorial(<span style="color:#ae81ff">5</span>);
-    v.y <span style="color:#f92672">=</span> factorial(<span style="color:#ae81ff">8</span>);
-    v.z <span style="color:#f92672">=</span> factorial(<span style="color:#ae81ff">13</span>);
+proc <span style="color:#a6e22e">main</span>() {
+    var x: <span style="color:#66d9ef">int</span> <span style="color:#f92672">=</span> factorial(<span style="color:#ae81ff">5</span>); <span style="color:#75715e">// the `int` is optional, as the type can be inferred based on the return type of `factorial()`
+</span><span style="color:#75715e"></span>    print(x);
+    assert(x <span style="color:#f92672">==</span> <span style="color:#ae81ff">120</span>);
 }
-</code></pre></div><p>Here is a visualization of the output of the parsing stage:</p>
-<p>(todo)</p>
-<p>Here is the bytecode output of the IR translation stage:</p>
-<pre><code>factorial:
+</code></pre></div><p>The output of the program is, of course:</p>
+<pre><code>120
+</code></pre><p>Parsing this code generates a syntax tree for the program (click to open full size):</p>
+<p><a href="http://localhost:1313/img/factorial_ast.png"><img src="/img/factorial_ast.png" alt="ast"></a></p>
+<p>Once the code is in this format the compiler can traverse the tree and do typechecking, constant evaluation, and enforce the rules of the language. For example we would immediately know that the number literal in the above program <code>5</code> is an <code>int</code>, so if <code>factorial()</code> took an <code>f32</code> or a <code>string</code> as its parameter, that would be a compile error. At the end of the typechecking phase all types of all variables and expressions are known and the program is known to be a valid program that obeys the rules of the language.</p>
+<p>The next step is to do another tree traversal and generate an intermediate representation (IR) of the program that is slightly closer to the final output executable code. The IR stage reasons about registers, storage of variables/values, and high-level instructions. The reason for having this representation is to do work that is common to all/most backends such as much of the work involved in register allocation, computing stack frame sizes for procedures (including the offsets of local variables), and certain high-level optimizations.</p>
+<p>After the IR is generated it is translated to executable instructions for the actual compile target. In my case the compile target is bytecode for a virtual machine that runs within the compiler:</p>
+<pre><code>// contents of basic.lang omitted, it just contains some intrinsics for the VM.
+
+factorial:
   ; save caller frame and return address
     push rfp
     push ra
@@ -219,7 +226,7 @@ proc main() {
   ; IR_Binop
     eq r3 r1 r2
   ; IR_If
-    gotoifz r3 if_ 28
+    gotoifz r3 if_57
   ; IR_Move_Immediate
     movi r3 1
   ; IR_Return
@@ -229,7 +236,7 @@ proc main() {
     pop rfp
     push r3
     mov rip ra
-if_ 28:
+if_57:
   ; IR_Load
     addi rt rfp -4
     load32 r3 rt
@@ -267,7 +274,7 @@ main:
     push ra
   ; setup stack frame
     mov rfp rsp
-    addi rsp rsp -12
+    addi rsp rsp -4
   ; body
   ; IR_Call
   ; IR_Move_Immediate
@@ -280,29 +287,19 @@ main:
     addi rt rfp -4
     store32 rt r1
   ; IR_Call
-  ; IR_Move_Immediate
-    movi r1 8
+  ; IR_Load
+    addi rt rfp -4
+    load32 r1 rt
     addi rt rsp -20
     store32 rt r1
-    jump factorial
-    pop r1
-  ; IR_Store
-    addi rt rfp -8
-    store32 rt r1
-  ; IR_Call
-  ; IR_Move_Immediate
-    movi r1 13
-    addi rt rsp -20
-    store32 rt r1
-    jump factorial
-    pop r1
-  ; IR_Store
-    addi rt rfp -12
-    store32 rt r1
+    jump print
   ; special sauce for main()
-    addi rsp rsp 12
+    addi rsp rsp 4
     exit
-</code></pre>
+</code></pre><p>As mentioned before, the above code is executed in a virtual machine that implements an ISA I made up. While I would like to write a real machine-code backend at some point, either use LLVM or generate x64 by hand, having this VM lets us do some cool things, like the following:</p>
+<pre><code>const TWENTY_FOUR: int = #run factorial(4);
+</code></pre><p><code>TWENTY_FOUR</code> is able to be constant because a <code>#run</code> directive will be run <em>at compile-time</em>, not runtime. We can evaluate <code>factorial(4)</code> as though it was a normal constant expression which means that in the actual executable <code>factorial()</code> will not be run, <code>TWENTY_FOUR</code> will simply be equal to <code>24</code>. But this can be used to do arbitrary things like generate code, or configure the building of your program <em>in the language itself</em> rather than having a separate <code>.bat</code> file. You could run tests. You could open a socket and communicate with your build server, or get the hash of the current commit in version control and embed that in the build, all in the language itself. I have not yet implemented <code>#run</code> but all the pieces are in place.</p>
+
     </div>
     
       
@@ -318,7 +315,7 @@ main:
               <span class="button previous">
                 <a href="/projects/mathy-robot-guy/">
                   <span class="button__icon">←</span>
-                  <span class="button__text">Untitled Puzzle Game</span>
+                  <span class="button__text">Puzzle Game</span>
                 </a>
               </span>
             

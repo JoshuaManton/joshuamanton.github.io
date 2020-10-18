@@ -3,7 +3,7 @@
   <head>
     
       <title>
-        Untitled Puzzle Game ::
+        Puzzle Game ::
         Joshua Manton
       </title>
     
@@ -47,15 +47,13 @@ Basic Gameplay   The video above demonstrates the basic mechanics of the game. Y
 
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Untitled Puzzle Game"/>
-<meta name="twitter:description" content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles. A playable prototype is available here (todo(josh)) and I encourage you to play before reading on.
-Basic Gameplay   The video above demonstrates the basic mechanics of the game. You move characters around on a 3D grid, pushing blocks around to get all the characters to the exit, which are the yellow tiles you see on the right of the level."/>
+<meta name="twitter:title" content="Puzzle Game"/>
+<meta name="twitter:description" content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles."/>
 
 
 
-<meta property="og:title" content="Untitled Puzzle Game" />
-<meta property="og:description" content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles. A playable prototype is available here (todo(josh)) and I encourage you to play before reading on.
-Basic Gameplay   The video above demonstrates the basic mechanics of the game. You move characters around on a 3D grid, pushing blocks around to get all the characters to the exit, which are the yellow tiles you see on the right of the level." />
+<meta property="og:title" content="Puzzle Game" />
+<meta property="og:description" content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/projects/mathy-robot-guy/" />
 <meta property="article:published_time" content="2020-10-17T00:00:00+00:00" />
@@ -146,7 +144,7 @@ Basic Gameplay   The video above demonstrates the basic mechanics of the game. Y
   
 
   <div class="post">
-    <h1 class="post-title">Untitled Puzzle Game</h1>
+    <h1 class="post-title">Puzzle Game</h1>
     <div class="post-meta">
       
         <span class="post-date">
@@ -169,7 +167,7 @@ Basic Gameplay   The video above demonstrates the basic mechanics of the game. Y
     
       <figure class="post-cover">
         
-          <img src="/img/mathy-robot-guy.png" alt="Untitled Puzzle Game" />
+          <img src="/img/mathy-robot-guy.png" alt="Puzzle Game" />
         
 
         
@@ -257,7 +255,7 @@ My_Cool_Entity <span style="color:#f92672">::</span> <span style="color:#66d9ef"
     extra: string,
     fields: <span style="color:#66d9ef">int</span>,
 }
-</code></pre></div><p>The game has a pre-build step that scans all the source code of the game and looks for all structs with an <code>@entity</code> tag. The builder then generates a tagged union type with all the entity types it found, as well as some storage I will discuss below. Here is the tagged union with all the entity types in the game:</p>
+</code></pre></div><p>The game has a pre-build step that scans all the source code of the game and looks for all structs with an <code>@entity</code> tag. The builder then generates a tagged union with all the entity types it found, as well as some storage which I will discuss below. Here is the tagged union with all the entity types in the game:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Entity_Kind <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> {
     Empty_Entity,
     Point_Light,
@@ -278,9 +276,9 @@ My_Cool_Entity <span style="color:#f92672">::</span> <span style="color:#66d9ef"
     World_Text,
     Puzzle_Region,
 }
-</code></pre></div><p>The actual <code>Entity</code> struct has some common fields like <code>position</code> and <code>orientation</code> as well as this tagged union. This tagged union means it&rsquo;s easy to ask an <code>Entity</code> what <em>kind</em> of entity it is, and since the different kinds of entities have a base pointer it is easy to go back the other way from derived to base. This union method means all entities have the same size so I can have all entities live in a single array, which leads me to the next goal of the entity system.</p>
+</code></pre></div><p>The actual <code>Entity</code> struct has some common fields like <code>position</code> and <code>orientation</code> as well as this tagged union. This tagged union means it is easy to ask an <code>Entity</code> what <em>kind</em> of entity it is, and since the different kinds of entities have a base pointer it is easy to go back the other way from derived to base. This union method means all entities have the same size so I can have all entities live in a single array, which leads me to the next goal of the entity system.</p>
 <h3 id="2-it-needs-to-be-easy-to-iterate-over-all-entities">#2. It needs to be easy to iterate over all entities.</h3>
-<p>Iterating over entities is very easy because all entities are stored in a single array of a large fixed size. The reason it&rsquo;s fixed size is because I don&rsquo;t want any resizing to invalidate pointers in gameplay code. The fixed size might feel limiting but in reality you will run into performance problems updating and rendering all the entities before you run into memory problems so I just have a huge array and don&rsquo;t worry about it. To be totally bulletproof I have considered using a virtual arena that reserves a terabyte of virtual memory or something ridiculous and then only actually commits something like a megabyte at a time, this would keep pointers valid while allowing for &ldquo;resizing&rdquo;. Maybe some time in the future I will do that.</p>
+<p>Iterating over entities is very easy because all entities are stored in a single array of a large fixed size. The reason it is a fixed size is because I don&rsquo;t want any resizing to invalidate pointers in gameplay code. The fixed size might feel limiting but in reality you will run into performance problems updating and rendering all the entities before you run into memory problems so I just have a huge array and don&rsquo;t worry about it. To be totally bulletproof I have considered using a virtual arena that reserves a terabyte of virtual memory or something ridiculous and then only actually commits something like a megabyte at a time, this would keep pointers valid while allowing for &ldquo;resizing&rdquo;. Maybe some time in the future I will do that.</p>
 <p>Since all the entities are stored in a single array iterating over them all is very easy though a custom iterator is needed to skip over empty slots and disabled entities.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">iterator :<span style="color:#f92672">=</span> entity_iterator(<span style="color:#f92672">&amp;</span>my_scene);
 <span style="color:#66d9ef">for</span> entity in <span style="color:#a6e22e">get_next_entity</span>(<span style="color:#f92672">&amp;</span>iterator) {
@@ -326,7 +324,7 @@ My_Cool_Entity <span style="color:#f92672">::</span> <span style="color:#66d9ef"
 </span><span style="color:#75715e"></span>
     some_renamed_field_456: <span style="color:#66d9ef">bool</span> <span style="color:#e6db74">&#34;wbml_oldname=some_renamed_field_123&#34;</span>, <span style="color:#75715e">// adding a `wbml_oldname` tag allows you to rename serialized fields and have the data be pulled from the old name properly
 </span><span style="color:#75715e"></span>}
-</code></pre></div><p>When you save the scene, all entities are serialized to disk. Each scene has it&rsquo;s own folder and each entity has it&rsquo;s own <code>.e</code> file inside that folder which is just a format containing two WBML objects: a header; and the actual entity data. Each entity having its own file in an easy-to-read text format makes it dead-easy to resolve merge conflicts if two people edit the same scene. A binary format would be used in a final release, of course. Here is an example of a <code>.e</code> file for a <em>register</em> entity:</p>
+</code></pre></div><p>When you save the scene, all entities are serialized to disk. Each scene has its own folder and each entity has its own <code>.e</code> file inside that folder which is just a format containing two WBML objects: a header; and the actual entity data. Each entity having its own file in an easy-to-read text format makes it dead-easy to resolve merge conflicts if two people edit the same scene (since each entity has its own file, a merge conflict would only even happen if you change the <em>exact same entity</em>). A binary format would be used in a final release, of course. Here is an example of a <code>.e</code> file for a <em>register</em> entity:</p>
 <pre><code>{
     entity_type &quot;Register_Tile&quot;
     id 4294967360
@@ -432,7 +430,7 @@ My_Cool_Entity <span style="color:#f92672">::</span> <span style="color:#66d9ef"
             
               <span class="button next">
                 <a href="/projects/compiler/">
-                  <span class="button__text">Untitled Compiler</span>
+                  <span class="button__text">Compiler</span>
                   <span class="button__icon">→</span>
                 </a>
               </span>
