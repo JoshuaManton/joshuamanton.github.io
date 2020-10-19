@@ -214,7 +214,7 @@ proc <span style="color:#a6e22e">main</span>() {
 </code></pre></div><p>The output of the program is, of course:</p>
 <pre><code>120
 </code></pre><p>Parsing this code generates a syntax tree for the program (click to open full size):</p>
-<p><a href="http://localhost:1313/img/factorial_ast.png"><img src="/img/factorial_ast.png" alt="ast"></a></p>
+<p><a href="/img/factorial_ast.png"><img src="/img/factorial_ast.png" alt="ast"></a></p>
 <p>Once the code is in this format the compiler can traverse the tree and do typechecking, constant evaluation, and enforce the rules of the language. For example we would immediately know that the number literal in the above program <code>5</code> is an <code>int</code>, so if <code>factorial()</code> took an <code>f32</code> or a <code>string</code> as its parameter, that would be a compile error. At the end of the typechecking phase all types of all variables and expressions are known and the program is known to be a valid program that obeys the rules of the language.</p>
 <p>The next step is to do another tree traversal and generate an intermediate representation (IR) of the program that is slightly closer to the final output executable code. The IR stage reasons about registers, storage of variables/values, and high-level instructions. The reason for having this representation is to do work that is common to all/most backends such as much of the work involved in register allocation, computing stack frame sizes for procedures (including the offsets of local variables), and certain high-level optimizations.</p>
 <p>After the IR is generated it is translated to executable instructions for the actual compile target. In my case the compile target is bytecode for a virtual machine that runs within the compiler:</p>
