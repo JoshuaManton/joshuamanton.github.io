@@ -306,9 +306,126 @@ main:
   ; special sauce for main()
     addi rsp rsp 4
     exit
-</code></pre><p>As mentioned before, the above code is executed in a virtual machine that implements an ISA I made up. While I would like to write a real machine-code backend at some point, either use LLVM or generate x64 by hand, having this VM lets us do some cool things, like the following:</p>
-<pre><code>const TWENTY_FOUR: int = #run factorial(4);
-</code></pre><p><code>TWENTY_FOUR</code> is able to be constant because a <code>#run</code> directive will be run <em>at compile-time</em>, not runtime. We can evaluate <code>factorial(4)</code> as though it was a normal constant expression which means that in the actual executable <code>factorial()</code> will not be run, <code>TWENTY_FOUR</code> will simply be equal to <code>24</code>. But this can be used to do arbitrary things like generate code, or configure the building of your program <em>in the language itself</em> rather than having a separate <code>.bat</code> file. You could run tests. You could open a socket and communicate with your build server, or get the hash of the current commit in version control and embed that in the build, all in the language itself. I have not yet implemented <code>#run</code> but all the pieces are in place.</p>
+</code></pre><p>As mentioned before, the above code is executed in a virtual machine that implements an ISA I made up. The VM is a pretty simple register-based VM. The compiler builds a linear list of instructions and the VM is basically just a huge switch-statement that does different work based on what the instruction is.</p>
+<p>The full source of the VM is available <strong><a href="https://github.com/JoshuaManton/lang/blob/master/vm.odin">here</a></strong> but I will walk through some of the key points of it here.</p>
+<p>The VM struct looks like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">VM <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    registers: [Register]u64,
+    instructions: [dynamic]Instruction,
+    memory: []byte,
+
+    <span style="color:#75715e">// some fields omitted
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>Pretty much to be expected. An array of instructions, an array of registers, and an array of bytes for memory. The instructions should probably live inside the <code>memory</code> array since that&rsquo;s how computers actually work; will do that soon.</p>
+<p><code>Register</code> is an enum that holds each of the named registers for the VM:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Register <span style="color:#f92672">::</span> <span style="color:#66d9ef">enum</span> {
+    rsp, rfp, rip, ra, rt, rz,
+    r1, r2, r3, r4,
+    r5, r6, r7, r8
+}
+</code></pre></div><p>Registers r1 through r8 are for users to do their normal work with; load values in, do some math, store values back to main memory. There are also some special named registers:</p>
+<ul>
+<li><code>rsp</code> holds the address of the current stack pointer. <code>push</code>ing and <code>pop</code>ing values decrements and increments the stack pointer (stack grows downwards).</li>
+<li><code>rfp</code> holds the address of the current frame pointer for a procedure&rsquo;s stack frame.</li>
+<li><code>rip</code> holds the index of the current instruction being executed.</li>
+<li><code>ra</code> hold the return address of the calling procedure.</li>
+<li><code>rt</code> is a utility register just for holding temporary values.</li>
+<li><code>rz</code> is hard-wired to <code>0</code>. Writing to it does nothing and reading it gives <code>0</code>.</li>
+</ul>
+<p>The <code>Instruction</code> struct is just a tagged union of all the instruction types:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Instruction <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> {
+    LOAD8,
+    LOAD16,
+    LOAD32,
+    LOAD64,
+    STORE8,
+    STORE16,
+    STORE32,
+    STORE64,
+
+    PUSH,
+    POP,
+
+    MOV,
+    MOVI,
+
+    ADD,
+    ADDI,
+    FADD,
+    FADDI,
+
+    <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>There are of course many more instructions for doing comparisons, jumps, and math. Each instruction has its own struct holding it&rsquo;s parameters:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">LOAD8   <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+LOAD16  <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+LOAD32  <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+LOAD64  <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+STORE8  <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+STORE16 <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+STORE32 <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+STORE64 <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst, p1: Register, }
+
+PUSH <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { p1:  Register }
+POP  <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> { dst: Register }
+
+MOV <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    dst, src: Register,
+}
+MOVI <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    dst: Register,
+    imm: i64,
+}
+
+ADD <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    dst, p1, p2: Register,
+}
+ADDI <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    dst, p1: Register,
+    imm: i64,
+}
+FADD <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    dst, p1, p2: Register,
+}
+FADDI <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    dst, p1: Register,
+    imm: f64,
+}
+
+<span style="color:#75715e">// ...
+</span></code></pre></div><p>As mentioned before, the VM execution is a huge switch-statement:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">instruction_loop: <span style="color:#66d9ef">for</span> vm.registers[.rip] <span style="color:#f92672">&lt;</span> cast(u64)len(vm.instructions) {
+    <span style="color:#66d9ef">switch</span> kind in vm.instructions[vm.registers[.rip]] {
+        <span style="color:#66d9ef">case</span> LOAD8:  vm.registers[kind.dst] <span style="color:#f92672">=</span> cast(u64)(cast(<span style="color:#f92672">^</span>u8 )<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.p1]])<span style="color:#f92672">^</span>;
+        <span style="color:#66d9ef">case</span> LOAD16: vm.registers[kind.dst] <span style="color:#f92672">=</span> cast(u64)(cast(<span style="color:#f92672">^</span>u16)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.p1]])<span style="color:#f92672">^</span>;
+        <span style="color:#66d9ef">case</span> LOAD32: vm.registers[kind.dst] <span style="color:#f92672">=</span> cast(u64)(cast(<span style="color:#f92672">^</span>u32)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.p1]])<span style="color:#f92672">^</span>;
+        <span style="color:#66d9ef">case</span> LOAD64: vm.registers[kind.dst] <span style="color:#f92672">=</span> cast(u64)(cast(<span style="color:#f92672">^</span>u64)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.p1]])<span style="color:#f92672">^</span>;
+        <span style="color:#66d9ef">case</span> STORE8:  (cast(<span style="color:#f92672">^</span>u8 )<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.dst]])<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> cast(u8 )vm.registers[kind.p1];
+        <span style="color:#66d9ef">case</span> STORE16: (cast(<span style="color:#f92672">^</span>u16)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.dst]])<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> cast(u16)vm.registers[kind.p1];
+        <span style="color:#66d9ef">case</span> STORE32: (cast(<span style="color:#f92672">^</span>u32)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.dst]])<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> cast(u32)vm.registers[kind.p1];
+        <span style="color:#66d9ef">case</span> STORE64: (cast(<span style="color:#f92672">^</span>u64)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[kind.dst]])<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> cast(u64)vm.registers[kind.p1];
+
+        <span style="color:#66d9ef">case</span> PUSH: vm.registers[.rsp] <span style="color:#f92672">-=</span> <span style="color:#ae81ff">8</span>; (cast(<span style="color:#f92672">^</span>u64)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[.rsp]])<span style="color:#f92672">^</span> <span style="color:#f92672">=</span> vm.registers[kind.p1];
+        <span style="color:#66d9ef">case</span> POP:  vm.registers[kind.dst] <span style="color:#f92672">=</span> (cast(<span style="color:#f92672">^</span>u64)<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[.rsp]])<span style="color:#f92672">^</span>; mem.zero(<span style="color:#f92672">&amp;</span>vm.memory[vm.registers[.rsp]], <span style="color:#ae81ff">8</span>); vm.registers[.rsp] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">8</span>;
+
+        <span style="color:#66d9ef">case</span> MOV:  vm.registers[kind.dst] <span style="color:#f92672">=</span> vm.registers[kind.src];
+        <span style="color:#66d9ef">case</span> MOVI: vm.registers[kind.dst] <span style="color:#f92672">=</span> transmute(u64)kind.imm;
+
+        <span style="color:#66d9ef">case</span> ADD:   vm.registers[kind.dst] <span style="color:#f92672">=</span> vm.registers[kind.p1] <span style="color:#f92672">+</span> vm.registers[kind.p2];
+        <span style="color:#66d9ef">case</span> ADDI:  vm.registers[kind.dst] <span style="color:#f92672">=</span> vm.registers[kind.p1] <span style="color:#f92672">+</span> transmute(u64)kind.imm;
+        <span style="color:#66d9ef">case</span> FADD:  vm.registers[kind.dst] <span style="color:#f92672">=</span> transmute(u64)(transmute(f64)vm.registers[kind.p1] <span style="color:#f92672">+</span> transmute(f64)vm.registers[kind.p2]);
+        <span style="color:#66d9ef">case</span> FADDI: vm.registers[kind.dst] <span style="color:#f92672">=</span> transmute(u64)(transmute(f64)vm.registers[kind.p1] <span style="color:#f92672">+</span> kind.imm);
+
+        <span style="color:#66d9ef">case</span> EXIT: <span style="color:#66d9ef">break</span> instruction_loop;
+
+        <span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>    }
+    vm.registers[.rip] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>;
+    vm.registers[.rz] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>While I would like to write a &ldquo;real&rdquo; machine-code backend at some point, either use LLVM or generate x64 by hand, having this VM lets us do some cool things, like the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">const</span> TWENTY_FOUR: <span style="color:#66d9ef">int</span> <span style="color:#f92672">=</span> <span style="color:#960050;background-color:#1e0010">#</span>run factorial(<span style="color:#ae81ff">4</span>);
+</code></pre></div><p><code>TWENTY_FOUR</code> is able to be constant because a <code>#run</code> directive will be run <em>at compile-time</em>, not runtime. We can evaluate <code>factorial(4)</code> as though it was a normal constant expression which means that in the actual executable <code>factorial()</code> will not be run, <code>TWENTY_FOUR</code> will simply be equal to <code>24</code>. But this can be used to do arbitrary things like generate code, or configure the building of your program <em>in the language itself</em> rather than having a separate <code>.bat</code> file. You could run tests. You could open a socket and communicate with your build server, or get the hash of the current commit in version control and embed that in the build, all in the language itself. I have not yet implemented <code>#run</code> but all the pieces are in place.</p>
 
     </div>
     
