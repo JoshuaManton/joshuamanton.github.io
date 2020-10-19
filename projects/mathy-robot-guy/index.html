@@ -194,19 +194,29 @@ Play demo here: https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTw
 </div>
 
 <p>The video above demonstrates the basic mechanics of the game. You move characters around on a 3D grid, pushing blocks around to get all the characters to the exit, which are the yellow tiles you see on the right of the level. The purple block is a <em>Register</em> that holds values and can evaluate expressions. The red tile blocking the exit is a <em>Gate</em> which is tied to the register and requires a specific value (2, in this case) before it will lower itself, clearing the path to the exit. In this level, the player pushes a 1, a +, and another 1 into the register to make 2 which opens the gate.</p>
-<h1 id="level-editor">Level Editor</h1>
-<p>// todo</p>
-<h1 id="movement-system">Movement System</h1>
-<p>// todo</p>
 <h1 id="engine">Engine</h1>
 <p>The game runs on a custom engine called Workbench written in the <a href="http://www.odin-lang.org">Odin programming language</a> with the following major features:</p>
 <ul>
 <li>Physically-based forward renderer using DirectX 11</li>
+<li>Cascaded shadow maps</li>
+<li>Skeletal animation (currently implemented in an old OpenGL backend, still needs to be ported to DirectX)</li>
+<li>Data-driven material system</li>
 <li>Entity system and scene editor</li>
 <li>Extensible asset pipeline</li>
-<li>Data-driven material system</li>
 </ul>
-<h2 id="renderer">Renderer</h2>
+<p>I heard a quote from Casey Muratori a few years ago that went something like this:</p>
+<blockquote>
+<p>If you&rsquo;re a game developer who only knows Unity and Unity suddenly goes under or disappears, you now don&rsquo;t know how to make games <em>at all</em>.</p>
+</blockquote>
+<p>This terrified me. The fact that I was resting my career on a specific tool seemed truly absurd, so I started looking into how game engines worked under the hood. While it is a lot more work it is also immensely rewarding and the times where it&rsquo;s rough aren&rsquo;t nearly as frustrating. I don&rsquo;t ever plan on going back to something like Unity or Unreal for any personal project, the amount of control you get over your application with a custom engine is too much to give up.</p>
+<h1 id="level-editor">Level Editor</h1>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/QWjvKMGVVMo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>The developer version of the game has a level editor built into it. This allows for rapid creation of levels and testing puzzle ideas. The video above demonstrates the level editor, making one of the tutorial levels in the game. You can place and rotate entities, change their properties in the inspector, and then save the scene in order to test.</p>
+<h1 id="renderer">Renderer</h1>
 <p>The renderer is a physically-based forward renderer built on top of DirectX 11 featuring a data-driven material system, cascaded shadow maps, and tonemapping, with bloom and skeletal animation implemented in an old OpenGL backend still needing to be ported over. The following is an example of a shader definition and a material definition defined in a custom markup language called WBML (<strong>W</strong>ork<strong>B</strong>ench <strong>M</strong>arkup <strong>L</strong>anguage):</p>
 <pre><code>// lit.shader
 {
@@ -249,7 +259,7 @@ Play demo here: https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTw
     ]
 }
 </code></pre><p>A material definition says which shader it is to be used with, and then provides values for any properties/textures that shader uses. The engine will then write the data to a byte array and ship it to the GPU as a constant buffer. In addition to providing values in the material asset on disk, you can also change any values at runtime.</p>
-<h2 id="entity-system">Entity System</h2>
+<h1 id="entity-system">Entity System</h1>
 <p>I did way too much rat-holing on entity systems before figuring out a structure that I like and is simple. I decided there were 4 main things I needed from the system:</p>
 <ol>
 <li>It needs to be easy to add new entities.</li>
