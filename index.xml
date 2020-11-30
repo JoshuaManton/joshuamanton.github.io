@@ -9,10 +9,29 @@
     <description>Recent content on Joshua Manton</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>3D C&#43;&#43; Renderer</title>
+      <link>/projects/cpp-renderer/</link>
+      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/cpp-renderer/</guid>
+      <description>
+        
+          &lt;img src=&#34;/img/cpp-renderer.jpg&#34;/&gt;
+          
+        
+        
+        
+          A 3D renderer written in C++.
+          
+        
+        </description>
+    </item>
     
     <item>
       <title>Puzzle Game</title>
