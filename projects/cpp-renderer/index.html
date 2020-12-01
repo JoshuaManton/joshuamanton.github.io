@@ -11,10 +11,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta
   name="description"
-  content="Physically-Based Rendering All the lighting calculations are done with physically based materials using the standard metallic-roughness model that Disney and Epic Games have popularized. This allows objects to look consistent in different lighting conditions, which the simpler Blinn-Phong model didn&amp;rsquo;t allow for.
-Normal Mapping Here is a visualization of the scene&amp;rsquo;s normals with normal maps:
-And without normal maps:
-Clearly normal maps add a ton of detail at the low-ish cost of an extra texture lookup and a matrix multiply to orient the normal to tangent-space."
+  content="Source Code The source for this renderer can be found here:
+https://github.com/JoshuaManton/cff
+The repo is messy right now because I&amp;rsquo;ve just been focusing on getting things working and didn&amp;rsquo;t want to waste time ratholing on directory structure but the files of note are the following:
+main.cpp -Main loop of the program, not much code really, mostly just calls into other things. basic.cpp/basic.h -Typedefs for ints and floats -ASSERT() macro -Custom memory allocators -Resizable Array&amp;lt;T&amp;gt; implementation -Hashtable&amp;lt;Key, Value&amp;gt; implementation -String_Builder implementation application."
 />
 <meta
   name="keywords"
@@ -178,7 +178,51 @@ Clearly normal maps add a ton of detail at the low-ish cost of an extra texture 
 
     <div class="post-content">
       
-      <h2 id="physically-based-rendering">Physically-Based Rendering</h2>
+      <h2 id="source-code">Source Code</h2>
+<p>The source for this renderer can be found here:</p>
+<p><a href="https://github.com/JoshuaManton/cff">https://github.com/JoshuaManton/cff</a></p>
+<p>The repo is messy right now because I&rsquo;ve just been focusing on getting things working and didn&rsquo;t want to waste time ratholing on directory structure but the files of note are the following:</p>
+<pre><code>main.cpp
+-Main loop of the program, not much code really, mostly just calls into other things.
+
+basic.cpp/basic.h
+-Typedefs for ints and floats
+-ASSERT() macro
+-Custom memory allocators
+-Resizable Array&lt;T&gt; implementation
+-Hashtable&lt;Key, Value&gt; implementation
+-String_Builder implementation
+
+application.h
+-Single-header platform and render-backend abstraction.
+-Win32 code for creating a window and handling window events.
+-DirectX11 implementation, creating textures, buffers, shaders, issuing draw calls, etc.
+-Notable things:
+    -create_window()
+    -WindowProc()
+    -init_graphics_driver()
+    -create_texture()
+    -set_render_targets()
+
+renderer.cpp/renderer.h
+-Handles all the heavy lifting for rendering on top of the application.h abstraction.
+-Notable things:
+    -begin_render_pass()
+    -draw_mesh()
+    -do_blur()
+    -create_renderer3d()
+    -render_scene()
+
+assimp_loader.cpp
+-Uses the Assimp library to load 3D models.
+-Notable things:
+    -load_model_from_file()
+    -process_node()
+
+math.cpp/math.h
+-Vector and matrix implementations mostly.
+</code></pre><p>With that out of the way, let&rsquo;s get into it! This article is by no means a deep dive into implementation details, more a cursory overview of the features of the renderer with visualizations where applicable.</p>
+<h2 id="physically-based-rendering">Physically-Based Rendering</h2>
 <p>All the lighting calculations are done with physically based materials using the standard metallic-roughness model that <a href="https://blog.selfshadow.com/publications/s2012-shading-course/burley/s2012_pbs_disney_brdf_notes_v3.pdf">Disney</a> and <a href="https://cdn2.unrealengine.com/Resources/files/2013SiggraphPresentationsNotes-26915738.pdf">Epic Games</a> have popularized. This allows objects to look consistent in different lighting conditions, which the simpler Blinn-Phong model didn&rsquo;t allow for.</p>
 <h2 id="normal-mapping">Normal Mapping</h2>
 <p>Here is a visualization of the scene&rsquo;s normals with normal maps:</p>
