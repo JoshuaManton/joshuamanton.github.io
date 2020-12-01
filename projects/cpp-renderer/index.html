@@ -13,8 +13,8 @@
   name="description"
   content="Source Code The source for this renderer can be found here:
 https://github.com/JoshuaManton/cff
-The repo is messy right now because I&amp;rsquo;ve just been focusing on getting things working and didn&amp;rsquo;t want to waste time ratholing on directory structure but the files of note are the following:
-main.cpp -Main loop of the program, not much code really, mostly just calls into other things. basic.cpp/basic.h -Typedefs for ints and floats -ASSERT() macro -Custom memory allocators -Resizable Array&amp;lt;T&amp;gt; implementation -Hashtable&amp;lt;Key, Value&amp;gt; implementation -String_Builder implementation application."
+The files of note are the following:
+main.cpp -Main loop of the program, not much code really, mostly just calls into other things. basic.cpp/basic.h -Typedefs for ints and floats -ASSERT() macro -Custom memory allocators -Resizable Array&amp;lt;T&amp;gt; implementation -Hashtable&amp;lt;Key, Value&amp;gt; implementation -String_Builder implementation application.h -Single-header platform and render-backend abstraction. -Win32 code for creating a window and handling window events. -DirectX11 implementation, creating textures, buffers, shaders, issuing draw calls, etc."
 />
 <meta
   name="keywords"
@@ -181,7 +181,7 @@ main.cpp -Main loop of the program, not much code really, mostly just calls into
       <h2 id="source-code">Source Code</h2>
 <p>The source for this renderer can be found here:</p>
 <p><a href="https://github.com/JoshuaManton/cff">https://github.com/JoshuaManton/cff</a></p>
-<p>The repo is messy right now because I&rsquo;ve just been focusing on getting things working and didn&rsquo;t want to waste time ratholing on directory structure but the files of note are the following:</p>
+<p>The files of note are the following:</p>
 <pre><code>main.cpp
 -Main loop of the program, not much code really, mostly just calls into other things.
 
