@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        Puzzle Game ::
+        Joshua Manton
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles.
+Play demo here: https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTwZ/view?usp=sharing
+I encourage you to play before reading on.
+This is a living document that will be added to as development continues and I decide something is interesting enough to write about.
+Basic Gameplay   The video above demonstrates the basic mechanics of the game."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/projects/mathy-robot-guy/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Puzzle Game"/>
+<meta name="twitter:description" content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles.
+
+Play demo here: https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTwZ/view?usp=sharing"/>
+
+
+
+<meta property="og:title" content="Puzzle Game" />
+<meta property="og:description" content="A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles.
+
+Play demo here: https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTwZ/view?usp=sharing" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/mathy-robot-guy/" />
+<meta property="article:published_time" content="2020-10-17T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-17T00:00:00+00:00" /><meta property="og:site_name" content="Joshua Manton" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >Joshua Manton</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">Puzzle Game</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+           
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+        
+          <img src="/img/mathy-robot-guy.png" alt="Puzzle Game" />
+        
+
+        
+      </figure>
+    
+
+    <div class="post-content">
+      
+      <p>A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles.</p>
+<p>Play demo here: <a href="https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTwZ/view?usp=sharing">https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTwZ/view?usp=sharing</a></p>
+<p>I encourage you to play before reading on.</p>
+<p><strong>This is a living document that will be added to as development continues and I decide something is interesting enough to write about.</strong></p>
+<h1 id="basic-gameplay">Basic Gameplay</h1>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/6E3z8DBW-Mw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>The video above demonstrates the basic mechanics of the game. You move characters around on a 3D grid, pushing blocks around to get all the characters to the exit, which are the yellow tiles you see on the right of the level. The purple block is a <em>Register</em> that holds values and can evaluate expressions. The red tile blocking the exit is a <em>Gate</em> which is tied to the register and requires a specific value (2, in this case) before it will lower itself, clearing the path to the exit. In this level, the player pushes a 1, a +, and another 1 into the register to make 2 which opens the gate.</p>
+<h1 id="engine">Engine</h1>
+<p>The game runs on a custom engine called Workbench written in the <a href="http://www.odin-lang.org">Odin programming language</a> with the following major features:</p>
+<ul>
+<li>Physically-based forward renderer using DirectX 11</li>
+<li>Cascaded shadow maps</li>
+<li>Skeletal animation (currently implemented in an old OpenGL backend, still needs to be ported to DirectX)</li>
+<li>Data-driven material system</li>
+<li>Entity system and scene editor</li>
+<li>Extensible asset pipeline</li>
+</ul>
+<p>I heard a quote from Casey Muratori a few years ago that went something like this:</p>
+<blockquote>
+<p>If you&rsquo;re a game developer who only knows Unity and Unity suddenly goes under or disappears, you now don&rsquo;t know how to make games <em>at all</em>.</p>
+</blockquote>
+<p>This terrified me. The fact that I was resting my career on a specific tool seemed truly absurd, so I started looking into how game engines worked under the hood. While it is a lot more work it is also immensely rewarding and the times where it&rsquo;s rough aren&rsquo;t nearly as frustrating. I don&rsquo;t ever plan on going back to something like Unity or Unreal for any personal project, the amount of control you get over your application with a custom engine is too much to give up.</p>
+<h1 id="level-editor">Level Editor</h1>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/QWjvKMGVVMo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>The developer version of the game has a level editor built into it. This allows for rapid creation of levels and testing puzzle ideas. The video above demonstrates the level editor, making one of the tutorial levels in the game. You can place and rotate entities, change their properties in the inspector, and then save the scene in order to test.</p>
+<h1 id="renderer">Renderer</h1>
+<p>The renderer is a physically-based forward renderer built on top of DirectX 11 featuring a data-driven material system, cascaded shadow maps, and tonemapping, with bloom and skeletal animation implemented in an old OpenGL backend still needing to be ported over. The following is an example of a shader definition and a material definition defined in a custom markup language called WBML (<strong>W</strong>ork<strong>B</strong>ench <strong>M</strong>arkup <strong>L</strong>anguage):</p>
+<pre><code>// lit.shader
+{
+    vertex_shader &quot;lit_vertex&quot;
+    pixel_shader  &quot;lit_pixel&quot;
+
+    properties [
+        { name &quot;base_color&quot;        type Vector4 }
+        { name &quot;metallicness&quot;      type Float   }
+        { name &quot;roughness&quot;         type Float   }
+        { name &quot;ambient&quot;           type Float   }
+        { name &quot;do_normal_mapping&quot; type Int     }
+    ]
+
+    textures [
+        { name &quot;shadow_map0&quot; type Texture2D }
+        { name &quot;shadow_map1&quot; type Texture2D }
+        { name &quot;shadow_map2&quot; type Texture2D }
+        { name &quot;shadow_map3&quot; type Texture2D }
+
+        { name &quot;albedo_map&quot; type Texture2D }
+        { name &quot;normal_map&quot; type Texture2D }
+        { name &quot;skybox_map&quot; type Cubemap   }
+    ]
+}
+</code></pre><p>For a shader definition you say which text files the actual source code will come from (<code>lit_vertex</code> and <code>lit_pixel</code> in this case, which are just <code>.hlsl</code> files), as well as any properties and textures the shader takes as inputs. The engine uses this information to generate the actual shader text that will be compiled and sent to the GPU, including generating constant buffer structs and texture slots.</p>
+<pre><code>// ground_mtl.material
+{
+    shader &quot;lit&quot;
+
+    properties [
+        { name &quot;base_color&quot;   value .Vector4 [ 1.0 1.0 1.0 1.0 ] }
+        { name &quot;metallicness&quot; value .f32 0.0 }
+        { name &quot;roughness&quot;    value .f32 1 }
+        { name &quot;ambient&quot;      value .f32 0.1 }
+    ]
+
+    textures [
+        { name &quot;albedo_map&quot; asset &quot;ground_tex&quot; }
+    ]
+}
+</code></pre><p>A material definition says which shader it is to be used with, and then provides values for any properties/textures that shader uses. The engine will then write the data to a byte array and ship it to the GPU as a constant buffer. In addition to providing values in the material asset on disk, you can also change any values at runtime.</p>
+<h1 id="entity-system">Entity System</h1>
+<p>I did way too much rat-holing on entity systems before figuring out a structure that I like and is simple. I decided there were 4 main things I needed from the system:</p>
+<ol>
+<li>It needs to be easy to add new entities.</li>
+<li>It needs to be easy to iterate over all entities.</li>
+<li>It needs to be easy to iterate over all entities of a specific type.</li>
+<li>The entities need to be easily serializable.</li>
+</ol>
+<h3 id="1-it-needs-to-be-easy-to-add-new-entities">#1. It needs to be easy to add new entities.</h3>
+<p>Adding a new entity is trivial; you simply define a normal struct and add an <code>@entity</code> tag above the struct and have a base pointer as the first field, like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#960050;background-color:#1e0010">@</span>entity
+My_Cool_Entity <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    using base: <span style="color:#f92672">^</span>Entity, <span style="color:#75715e">// the `using` just makes it so I can do `my_cool_entity.position` rather than `my_cool_entity.base.position`
+</span><span style="color:#75715e"></span>
+    some: f32,
+    extra: string,
+    fields: <span style="color:#66d9ef">int</span>,
+}
+</code></pre></div><p>The game has a pre-build step that scans all the source code of the game and looks for all structs with an <code>@entity</code> tag. The builder then generates a tagged union with all the entity types it found, as well as some storage which I will discuss below. Here is the tagged union with all the entity types in the game:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Entity_Kind <span style="color:#f92672">::</span> <span style="color:#66d9ef">union</span> {
+    Empty_Entity,
+    Point_Light,
+    Directional_Light,
+    Camera_Settings,
+    Level_Portal,
+    Register_Tile,
+    Operator,
+    Parameter,
+    End_Point,
+    Gate,
+    Ground,
+    Block,
+    Directional_Ground,
+    Multiplexer,
+    Player,
+    Pressure_Plate,
+    World_Text,
+    Puzzle_Region,
+}
+</code></pre></div><p>The actual <code>Entity</code> struct has some common fields like <code>position</code> and <code>orientation</code> as well as this tagged union. This tagged union means it is easy to ask an <code>Entity</code> what <em>kind</em> of entity it is, and since the different kinds of entities have a base pointer it is easy to go back the other way from derived to base. This union method means all entities have the same size so I can have all entities live in a single array, which leads me to the next goal of the entity system.</p>
+<h3 id="2-it-needs-to-be-easy-to-iterate-over-all-entities">#2. It needs to be easy to iterate over all entities.</h3>
+<p>Iterating over entities is very easy because all entities are stored in a single array of a large fixed size. The reason it is a fixed size is because I don&rsquo;t want any resizing to invalidate pointers in gameplay code. The fixed size might feel limiting but in reality you will run into performance problems updating and rendering all the entities before you run into memory problems so I just have a huge array and don&rsquo;t worry about it. To be totally bulletproof I have considered using a virtual arena that reserves a terabyte of virtual memory or something ridiculous and then only actually commits something like a megabyte at a time, this would keep pointers valid while allowing for &ldquo;resizing&rdquo;. Maybe some time in the future I will do that.</p>
+<p>Since all the entities are stored in a single array iterating over them all is very easy though a custom iterator is needed to skip over empty slots and disabled entities.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">iterator :<span style="color:#f92672">=</span> entity_iterator(<span style="color:#f92672">&amp;</span>my_scene);
+<span style="color:#66d9ef">for</span> entity in <span style="color:#a6e22e">get_next_entity</span>(<span style="color:#f92672">&amp;</span>iterator) {
+    <span style="color:#75715e">// do something with the entity
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="3-it-needs-to-be-easy-to-iterate-over-all-entities-of-a-specific-type">#3. It needs to be easy to iterate over all entities of a specific type.</h3>
+<p>To iterate over all entities of a specific type I decided to do some compile-time code generation to create storage in the <code>Scene</code> for an array of pointers to each entity type. The following structure gets generated:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">Entities_By_Type <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    Empty_Entity: [dynamic]<span style="color:#f92672">^</span>Empty_Entity,
+    Point_Light: [dynamic]<span style="color:#f92672">^</span>Point_Light,
+    Directional_Light: [dynamic]<span style="color:#f92672">^</span>Directional_Light,
+    Camera_Settings: [dynamic]<span style="color:#f92672">^</span>Camera_Settings,
+    Level_Portal: [dynamic]<span style="color:#f92672">^</span>Level_Portal,
+    Register_Tile: [dynamic]<span style="color:#f92672">^</span>Register_Tile,
+    Operator: [dynamic]<span style="color:#f92672">^</span>Operator,
+    Parameter: [dynamic]<span style="color:#f92672">^</span>Parameter,
+    End_Point: [dynamic]<span style="color:#f92672">^</span>End_Point,
+    Gate: [dynamic]<span style="color:#f92672">^</span>Gate,
+    Ground: [dynamic]<span style="color:#f92672">^</span>Ground,
+    Block: [dynamic]<span style="color:#f92672">^</span>Block,
+    Directional_Ground: [dynamic]<span style="color:#f92672">^</span>Directional_Ground,
+    Multiplexer: [dynamic]<span style="color:#f92672">^</span>Multiplexer,
+    Player: [dynamic]<span style="color:#f92672">^</span>Player,
+    Pressure_Plate: [dynamic]<span style="color:#f92672">^</span>Pressure_Plate,
+    World_Text: [dynamic]<span style="color:#f92672">^</span>World_Text,
+    Puzzle_Region: [dynamic]<span style="color:#f92672">^</span>Puzzle_Region,
+}
+</code></pre></div><p>Just a bunch of dynamic arrays of pointers. Then every frame I clear these arrays, iterate over all entities in the scene, check their type and repopulate them. This means that if you wanted to iterate over all <code>Pressure_Plate</code>s for example, you would do the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">for</span> plate in my_scene.by_type.Pressure_Plate {
+    <span style="color:#75715e">// do something with the plate
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h3 id="4-the-entities-need-to-be-easily-serializable">#4. The entities need to be easily serializable.</h3>
+<p>Since an entity is just a struct I can leverage the runtime type information facilities in Odin to serialize and deserialize entities using WBML.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#960050;background-color:#1e0010">@</span>entity
+My_Cool_Entity <span style="color:#f92672">::</span> <span style="color:#66d9ef">struct</span> {
+    using base: <span style="color:#f92672">^</span>Entity,
+
+    some: f32,
+    extra: string,
+    fields: <span style="color:#66d9ef">int</span>,
+
+    wont_be_serialized: <span style="color:#f92672">^</span>Thing <span style="color:#e6db74">&#34;wbml_noserialize&#34;</span>, <span style="color:#75715e">// adding a `wbml_noserialize` tag will stop this field from being written to disk when the scene is saved
+</span><span style="color:#75715e"></span>
+    some_renamed_field_456: <span style="color:#66d9ef">bool</span> <span style="color:#e6db74">&#34;wbml_oldname=some_renamed_field_123&#34;</span>, <span style="color:#75715e">// adding a `wbml_oldname` tag allows you to rename serialized fields and have the data be pulled from the old name properly
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>When you save the scene, all entities are serialized to disk. Each scene has its own folder and each entity has its own <code>.e</code> file inside that folder which is just a format containing two WBML objects: a header; and the actual entity data. Each entity having its own file in an easy-to-read text format makes it dead-easy to resolve merge conflicts if two people edit the same scene (since each entity has its own file, a merge conflict would only even happen if you change the <em>exact same entity</em>). A binary format would be used in a final release, of course. Here is an example of a <code>.e</code> file for a <em>register</em> entity:</p>
+<pre><code>{
+    entity_type &quot;Register_Tile&quot;
+    id 4294967360
+    name &quot;Register_Tile&quot;
+}
+
+{
+    id 4294967360
+    enabled true
+    name &quot;Register_Tile&quot;
+    version 11
+    position [
+        0.000
+        -1.000
+        -1.000
+    ]
+    scale [
+        1.000
+        1.000
+        1.000
+    ]
+    orientation quat 1.000 0.000 0.000 0.000
+    render_info {
+        model_offset [
+            0.000
+            0.000
+            0.000
+        ]
+        model_scale [
+            1.000
+            1.000
+            1.000
+        ]
+        model_id &quot;cube_model&quot;
+        color [
+            1.000
+            1.000
+            1.000
+            1.000
+        ]
+        material_id &quot;register_tile_mtl&quot;
+    }
+    user_flags 3
+    user_data {
+        save_state_in_overworld false
+        reset_to_position [
+            0.000
+            -1.000
+            -1.000
+        ]
+    }
+    derived .Register_Tile {
+        wire_offset [
+            0.000
+            1.000
+            0.000
+        ]
+        feeders [
+            4294967308
+            4294967388
+            4294967389
+            4294967357
+            4294967358
+            4294967462
+        ]
+        listeners [
+            8589934657
+        ]
+    }
+}
+</code></pre><p>The format is just two WBML objects. The first being a header containing data for some pre-deserialization work that needs to be done, and the second is that entity&rsquo;s state in the scene when it was saved. Each entity also has a version number, so if you change an entity structure drastically to require some custom version upgrade code, you can do that just after deserialization with something like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">do_entity_upgrade <span style="color:#f92672">::</span> proc(entity: <span style="color:#f92672">^</span>Entity) {
+    <span style="color:#66d9ef">if</span> entity.version <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">4</span> {
+        entity.version <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>;
+        <span style="color:#75715e">// added a new field which is a Vector2, so combine the old x and y values
+</span><span style="color:#75715e"></span>        entity.some_new_field <span style="color:#f92672">=</span> Vector2{entity.deprecated_x, entity.deprecated_y};
+    }
+
+    <span style="color:#66d9ef">if</span> entity.version <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span> {
+        entity.version <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>;
+        <span style="color:#75715e">// added a player_name field to the Player entity, so if this entity is a Player, give it a default name
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">#partial
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">switch</span> kind in <span style="color:#f92672">&amp;</span>entity.derived {
+            <span style="color:#66d9ef">case</span> Player: {
+                kind.player_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Default Player Name&#34;</span>;
+            }
+        }
+    }
+}
+</code></pre></div>
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/projects/compiler/">
+                  <span class="button__text">Compiler</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >Joshua Manton</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span
+          >© 2020 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+        <span
+          >Theme created by
+          <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

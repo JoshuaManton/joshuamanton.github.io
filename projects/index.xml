@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Joshua Manton</title>
+    <title>Projects on Joshua Manton</title>
     
     
     
-    <link>/</link>
-    <description>Recent content on Joshua Manton</description>
+    <link>/projects/</link>
+    <description>Recent content in Projects on Joshua Manton</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -76,27 +76,6 @@ Source: https://github.com/JoshuaManton/lang.
 Demo: https://github.com/JoshuaManton/lang/blob/master/demo.lang
 
 Click read more for more detailed information about the compiler.
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          My name is Joshua Manton and I am a software developer living in Victoria, British Columbia.
-I started programming as a hobby in 2010 tinkering with Unity3D and it quickly became a passion, leading me to attend Camosun College in the Computer Systems Technology program after high school in 2014. As of 2020 I&amp;rsquo;ve been working professionally as a programmer for 4 years, working on competitive multiplayer mobile games, casual games, an augmented reality amusement park ride, and other location-based entertainment.
           
         
         </description>
