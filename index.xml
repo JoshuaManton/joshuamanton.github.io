@@ -1,106 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?xml-stylesheet href="/feed_style.xsl" type="text/xsl"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="https://www.rssboard.org/media-rss">
   <channel>
     <title>Joshua Manton</title>
-    
-    
-    
-    <link>/</link>
+    <link>http://joshuamanton.com/</link>
     <description>Recent content on Joshua Manton</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 30 Nov 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://joshuamanton.com/index.xml" rel="self" type="application/rss+xml" /><icon>http://joshuamanton.com/img/icon.svg</icon>
     
     
-    <item>
-      <title>3D C&#43;&#43; Renderer</title>
-      <link>/projects/cpp-renderer/</link>
-      <pubDate>Mon, 30 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/cpp-renderer/</guid>
-      <description>
-        
-          &lt;img src=&#34;/img/cpp-renderer.jpg&#34;/&gt;
-          
-        
-        
-        
-          A 3D renderer written in C++.
-          
-        
-        </description>
-    </item>
     
-    <item>
-      <title>Puzzle Game</title>
-      <link>/projects/puzzle-game/</link>
-      <pubDate>Sat, 17 Oct 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/puzzle-game/</guid>
-      <description>
-        
-          &lt;img src=&#34;/img/mathy-robot-guy.png&#34;/&gt;
-          
-        
-        
-        
-          A game where you push blocks around and use the power of mathematics to interact with the world around you and solve puzzles.
-
-Play demo here: https://drive.google.com/file/d/114WXCk3p4rPQgUeSWNGvWN9G4C0QcTwZ/view?usp=sharing
-
-Click read more for more detailed information about the game and engine.
-          
-        
-        </description>
-    </item>
     
-    <item>
-      <title>Compiler</title>
-      <link>/projects/compiler/</link>
-      <pubDate>Sun, 13 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/compiler/</guid>
-      <description>
-        
-          &lt;img src=&#34;/img/compiler.png&#34;/&gt;
-          
-        
-        
-        
-          A compiler project for fun.
-
-Source: https://github.com/JoshuaManton/lang.
-
-Demo: https://github.com/JoshuaManton/lang/blob/master/demo.lang
-
-Click read more for more detailed information about the compiler.
-          
-        
-        </description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>
-        
-          
-          
-          
-        
-        
-        
-          My name is Joshua Manton and I am a software developer living in Victoria, British Columbia.
-I started programming as a hobby in 2010 tinkering with Unity3D and it quickly became a passion, leading me to attend Camosun College in the Computer Systems Technology program after high school in 2014. As of 2020 I&amp;rsquo;ve been working professionally as a programmer for 4 years, working on competitive multiplayer mobile games, casual games, an augmented reality amusement park ride, and other location-based entertainment.
-          
-        
-        </description>
-    </item>
     
   </channel>
 </rss>

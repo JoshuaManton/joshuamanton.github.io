@@ -1,42 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>/projects/cpp-renderer/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
+    <loc>http://joshuamanton.com/categories/</loc>
+  </url><url>
+    <loc>http://joshuamanton.com/</loc>
+  </url><url>
+    <loc>http://joshuamanton.com/manifest/index.json</loc>
+  </url><url>
+    <loc>http://joshuamanton.com/search/</loc>
+  </url><url>
+    <loc>http://joshuamanton.com/tags/</loc>
   </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/projects/</loc>
-    <lastmod>2020-11-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/projects/puzzle-game/</loc>
-    <lastmod>2020-10-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/projects/compiler/</loc>
-    <lastmod>2020-09-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/about/</loc>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-  </url>
-  
 </urlset>
