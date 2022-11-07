@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Joshua Manton</title>
+    
+    
+    
+    <link>/posts/</link>
+    <description>Recent content in Posts on Joshua Manton</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 13 Sep 2020 21:49:46 -0700</lastBuildDate>
+    
+	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Arena Allocators</title>
+      <link>/posts/arenas/</link>
+      <pubDate>Sun, 13 Sep 2020 21:49:46 -0700</pubDate>
+      
+      <guid>/posts/arenas/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis est id nunc aliquet lobortis. Pellentesque ac tristique purus. Duis turpis lectus, dictum et rutrum non, maximus vel dui. Aliquam lectus est, sodales ac diam in, facilisis dictum lacus. Nunc maximus lobortis congue. Pellentesque ut nisi mauris. Phasellus ex felis, dapibus ut cursus in, pretium quis dui. Nullam ullamcorper turpis eu suscipit consequat. Integer porta felis non magna laoreet viverra. Suspendisse efficitur quam sed lectus vestibulum hendrerit condimentum id orci.
+          
+        
+        </description>
+    </item>
+    
+    <item>
+      <title>My First Post</title>
+      <link>/posts/my-first-post/</link>
+      <pubDate>Sun, 13 Sep 2020 21:49:46 -0700</pubDate>
+      
+      <guid>/posts/my-first-post/</guid>
+      <description>
+        
+          
+          
+          
+        
+        
+        
+          Hello Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus quis est id nunc aliquet lobortis. Pellentesque ac tristique purus. Duis turpis lectus, dictum et rutrum non, maximus vel dui. Aliquam lectus est, sodales ac diam in, facilisis dictum lacus. Nunc maximus lobortis congue. Pellentesque ut nisi mauris. Phasellus ex felis, dapibus ut cursus in, pretium quis dui. Nullam ullamcorper turpis eu suscipit consequat. Integer porta felis non magna laoreet viverra.
+          
+        
+        </description>
+    </item>
+    
+  </channel>
+</rss>
