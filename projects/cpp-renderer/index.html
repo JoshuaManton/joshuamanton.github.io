@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>
+        3D C&#43;&#43; Renderer ::
+        Joshua Manton
+      </title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Source Code The source for this renderer can be found here:
+https://github.com/JoshuaManton/cff
+The files of note are the following:
+main.cpp -Main loop of the program, not much code really, mostly just calls into other things. basic.cpp/basic.h -Typedefs for ints and floats -ASSERT() macro -Custom memory allocators -Resizable Array&amp;lt;T&amp;gt; implementation -Hashtable&amp;lt;Key, Value&amp;gt; implementation -String_Builder implementation application.h -Single-header platform and render-backend abstraction. -Win32 code for creating a window and handling window events. -DirectX11 implementation, creating textures, buffers, shaders, issuing draw calls, etc."
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/projects/cpp-renderer/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css" />
+
+<link rel="stylesheet" href="/style.css" />
+
+
+<link
+  rel="apple-touch-icon-precomposed"
+  sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png"
+/>
+<link rel="shortcut icon" href="/img/favicon.png" />
+
+
+<link href="/assets/fonts/Inter-Italic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Regular.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Medium.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-MediumItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-Bold.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+<link href="/assets/fonts/Inter-BoldItalic.woff2" rel="preload" type="font/woff2" as="font" crossorigin="">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="3D C&#43;&#43; Renderer"/>
+<meta name="twitter:description" content="A 3D renderer written in C&#43;&#43;."/>
+
+
+
+<meta property="og:title" content="3D C&#43;&#43; Renderer" />
+<meta property="og:description" content="A 3D renderer written in C&#43;&#43;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/cpp-renderer/" />
+<meta property="article:published_time" content="2020-11-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-30T00:00:00+00:00" /><meta property="og:site_name" content="Joshua Manton" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >Joshua Manton</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+      
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg
+  class="theme-toggler"
+  width="24"
+  height="24"
+  viewBox="0 0 48 48"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"
+  />
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title">3D C++ Renderer</h1>
+    <div class="post-meta">
+      
+        <span class="post-date">
+           
+        </span>
+
+        
+          
+        
+      
+
+      
+
+
+      
+    </div>
+
+    
+
+    
+      <figure class="post-cover">
+        
+          <img src="/img/cpp-renderer.jpg" alt="3D C&#43;&#43; Renderer" />
+        
+
+        
+      </figure>
+    
+
+    <div class="post-content">
+      
+      <h2 id="source-code">Source Code</h2>
+<p>The source for this renderer can be found here:</p>
+<p><a href="https://github.com/JoshuaManton/cff">https://github.com/JoshuaManton/cff</a></p>
+<p>The files of note are the following:</p>
+<pre><code>main.cpp
+-Main loop of the program, not much code really, mostly just calls into other things.
+
+basic.cpp/basic.h
+-Typedefs for ints and floats
+-ASSERT() macro
+-Custom memory allocators
+-Resizable Array&lt;T&gt; implementation
+-Hashtable&lt;Key, Value&gt; implementation
+-String_Builder implementation
+
+application.h
+-Single-header platform and render-backend abstraction.
+-Win32 code for creating a window and handling window events.
+-DirectX11 implementation, creating textures, buffers, shaders, issuing draw calls, etc.
+-Notable things:
+    -create_window()
+    -WindowProc()
+    -init_graphics_driver()
+    -create_texture()
+    -set_render_targets()
+
+renderer.cpp/renderer.h
+-Handles all the heavy lifting for rendering on top of the application.h abstraction.
+-Notable things:
+    -begin_render_pass()
+    -draw_mesh()
+    -do_blur()
+    -create_renderer3d()
+    -render_scene()
+
+assimp_loader.cpp
+-Uses the Assimp library to load 3D models.
+-Notable things:
+    -load_model_from_file()
+    -process_node()
+
+math.cpp/math.h
+-Vector and matrix implementations mostly.
+</code></pre><p>With that out of the way, let&rsquo;s get into it! This article is by no means a deep dive into implementation details, more a cursory overview of the features of the renderer with visualizations where applicable.</p>
+<h2 id="physically-based-rendering">Physically-Based Rendering</h2>
+<p>All the lighting calculations are done with physically based materials using the standard metallic-roughness model that <a href="https://blog.selfshadow.com/publications/s2012-shading-course/burley/s2012_pbs_disney_brdf_notes_v3.pdf">Disney</a> and <a href="https://cdn2.unrealengine.com/Resources/files/2013SiggraphPresentationsNotes-26915738.pdf">Epic Games</a> have popularized. This allows objects to look consistent in different lighting conditions, which the simpler Blinn-Phong model didn&rsquo;t allow for.</p>
+<h2 id="normal-mapping">Normal Mapping</h2>
+<p>Here is a visualization of the scene&rsquo;s normals with normal maps:</p>
+<p><img src="/img/cpp-renderer-normal-map-visualization.jpg" alt="With normal map visualization"></p>
+<p>And without normal maps:</p>
+<p><img src="/img/cpp-renderer-no-normal-map-visualization.png" alt="Without normal map visualization"></p>
+<p>Clearly normal maps add a ton of detail at the low-ish cost of an extra texture lookup and a matrix multiply to orient the normal to tangent-space. Very well worth the trade-off. Though right now there are some nasty Moire patterns in my renderer that become especially pronounced with normal mapping, will fix that in the future.</p>
+<p>Here is that same perspective of the scene with normal mapping:</p>
+<p><img src="/img/cpp-renderer-normal-maps.jpg" alt="With normal map scene"></p>
+<p>And without normal mapping:</p>
+<p><img src="/img/cpp-renderer-no-normal-maps.jpg" alt="Without normal map scene"></p>
+<h2 id="cascaded-shadow-maps">Cascaded Shadow Maps</h2>
+<p>Pretty standard cascaded shadow maps implementation. I use four 2048x2048 textures for the shadow maps and render the depth of the scene from the sun&rsquo;s perspective looking at four different sections of the camera&rsquo;s frustum, then sample those in shader when drawing the scene.</p>
+<p>Here is a visualization of the different cascades being used as a function of distance:</p>
+<p><img src="/img/cpp-renderer-cascade-visualization.jpg" alt="Cascade visualization"></p>
+<p>And without the visualization:</p>
+<p><img src="/img/cpp-renderer-shadows.jpg" alt="Shadows"></p>
+<p>I also do some blending between cascades in the last 20% of each cascade to make the transition smoother which can be seen quite clearly here:</p>
+<p><img src="/img/cpp-renderer-cascade-blending.png" alt="Blending"></p>
+<p>And without blending:</p>
+<p><img src="/img/cpp-renderer-no-cascade-blending.png" alt="No blending"></p>
+<h2 id="screen-space-reflections">Screen-space Reflections</h2>
+<p><img src="/img/cpp-renderer-ssr.jpg" alt="SSR"></p>
+<p>Screen-space reflections are implemented with some light ray-tracing. For every pixel on the screen I reflect the direction to that pixel by its normal and then trace forward until the vector from the camera to the ray position is blocked by some other geometry. This requires a whole bunch of matrix-vector transformations going from world-space to screen-space for each step. There is likely a smarter algorithm but this is where my intuition led me after reading a high-level overview about how SSR works.</p>
+<p>Of course, since it&rsquo;s screen-space, if the thing that would reflect off the surface isn&rsquo;t on screen then the reflection disappears. Here is the same perspective as above but with the camera tilted down such that the red curtain isn&rsquo;t on screen:</p>
+<p><img src="/img/cpp-renderer-ssr-offscreen.jpg" alt="SSR"></p>
+<p>Also interesting is how normal maps change the reflection.</p>
+<p>With normal maps:</p>
+<p><img src="/img/cpp-renderer-ssr-normal-maps.jpg" alt="SSR normal maps"></p>
+<p>Without normal maps:</p>
+<p><img src="/img/cpp-renderer-ssr-no-normal-maps.jpg" alt="SSR no normal maps"></p>
+<p>Here is a visualization with albedo and normal maps disabled, just lighting and the reflections:</p>
+<p><img src="/img/cpp-renderer-ssr-no-color.png" alt="SSR no color"></p>
+<p>You can see that there is some clear banding artefacts as a result of the ray marching step sizes. I figure this could be fixed by doing a binary search once the ray finds itself behind a surface, kind of like you&rsquo;d do for search-in-P collision detection.</p>
+<p>You&rsquo;ll also notice that instead of the reflection cutting off sharply for offscreen pixels it fades out smoothly. This is done with a simple term that goes to 0 as the pixel distance (in viewport space) from the center of the screen approaches 1:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">float</span> attentuation_fade_term <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">-</span> saturate(length(ray_position_position_sample_viewport_space.xy));
+</code></pre></div><p>I figured screen-space reflections can be extended to do screen-space global illumination too just by sampling in a hemisphere around the pixel position instead of just reflecting the view direction, so I tried that for fun and while it ran at roughly 0.3FPS the effect was pretty nice for a naive, just-for-fun implementation. The header image for this post was taken from that test.</p>
+<h2 id="bloom-and-hdr">Bloom and HDR</h2>
+<p><img src="/img/cpp-renderer-bloom.jpg" alt="Bloom"></p>
+<p>Bloom is done by picking out the pixels in the scene that exceed a certain brightness value, blurring it, and then compositing it on top of the main render of the scene.</p>
+<p>Here is the same perspective from above without bloom:</p>
+<p><img src="/img/cpp-renderer-no-bloom.jpg" alt="Bloom"></p>
+<p>There are many things you can adjust to get the bloom effect you want such as the specific blur algorithm (the one above is a Gaussian blur), how many iterations of blur you want to do, the radius of the blur, and what the brightness threshold for blooming is, among others.</p>
+<p>As for HDR, the scene is drawn to a floating-point render texture and I&rsquo;m using Reinhard tonemapping in the final composite before drawing to the screen.</p>
+<h2 id="auto-exposure">Auto-Exposure</h2>
+<p>Auto-exposure is done by taking the final render of the scene view and downsampling it to an 8x8 texture and then sampling the center pixel. The idea is that pixel is representative of the average brightness of what the camera is looking at, so you can use that information in the next frame to automatically adjust exposure over time, just as our eyes automatically adjust to darkness/brightness.</p>
+<p>Notice how the composition is different depending on whether we are looking at something bright versus something dark:</p>
+<p><img src="/img/cpp-renderer-autoexposure-bright.jpg" alt="Bright"></p>
+<p><img src="/img/cpp-renderer-autoexposure-dark.jpg" alt="Dark"></p>
+<h2 id="volumetric-fog">Volumetric Fog</h2>
+<p><img src="/img/cpp-renderer-volumetric-fog.jpg" alt="Fog"></p>
+<p>I implemented volumetric fog just as a fun diversion one evening. It&rsquo;s implemented in a pixel shader as the following:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">float</span> total_density <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">float</span> STEP_SIZE <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>;
+<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> MAX_DISTANCE <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>;
+<span style="color:#66d9ef">float</span> ray_distance <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#66d9ef">while</span> (ray_distance <span style="color:#f92672">&lt;</span> MAX_DISTANCE) {
+    float3 ray_position <span style="color:#f92672">=</span> camera_position <span style="color:#f92672">-</span> direction_to_camera <span style="color:#f92672">*</span> ray_distance;
+    <span style="color:#66d9ef">float</span> fog_amount <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">-</span> exp(<span style="color:#f92672">-</span>fog_density <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> (max(<span style="color:#ae81ff">1.0</span>, input.world_position.y <span style="color:#f92672">-</span> fog_y_level))));
+    <span style="color:#66d9ef">float</span> factor <span style="color:#f92672">=</span> (ray_distance <span style="color:#f92672">&lt;</span> distance_to_pixel_position <span style="color:#f92672">&amp;&amp;</span> sun_can_see_point(ray_position, sun_transforms[<span style="color:#ae81ff">3</span>], shadow_map4)) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>;
+    total_density <span style="color:#f92672">+=</span> fog_amount <span style="color:#f92672">*</span> STEP_SIZE <span style="color:#f92672">*</span> factor;
+    ray_distance <span style="color:#f92672">+=</span> STEP_SIZE;
+}
+output_color.rgb <span style="color:#f92672">=</span> lerp(output_color.rgb, fog_color, saturate(total_density));
+</code></pre></div><p>Not exactly the most physically correct thing but it looks pretty good for now. There&rsquo;s a lot more that needs to be accounted for here (for example supporting light sources other than just the sun) and I plan on using <a href="https://developer.nvidia.com/sites/default/files/akamai/gameworks/downloads/papers/NVVL/Fast_Flexible_Physically-Based_Volumetric_Light_Scattering.pdf">this paper</a> to get started in the right direction. I also saw <a href="https://www.slideshare.net/DICEStudio/physically-based-and-unified-volumetric-rendering-in-frostbite">these slides</a> showing volumetric fog using voxels in the Frostbite engine which I may look into. I got the <code>fog_amount</code> equation (with some adjustments) from <a href="https://www.iquilezles.org/www/articles/fog/fog.htm">Inigo Quilez&rsquo;s blog post</a>.</p>
+<h2 id="future-plans">Future Plans</h2>
+<h3 id="global-illumination">Global Illumination</h3>
+<p>I&rsquo;d like to use voxel cone tracing to implement GI. Some of the results I&rsquo;ve seen from this are simply incredible. From what I understand the technique can be trivially extended to improve shadow maps and ambient occlusion as well which would be wonderful.</p>
+<p>Example:
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/cH2_RkfStSk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<h3 id="improve-volumetric-fog">Improve Volumetric Fog</h3>
+<p>As mentioned in the fog section I&rsquo;d like to improve the fog and make it more physically correct, as well as give that voxel-based approach a try.</p>
+<h3 id="handle-transparency-correctly">Handle Transparency Correctly</h3>
+<p>You may have noticed in some of the screenshots that the plants have a blue edge around them. I am correctly drawing opaque geometry first and transparent geometry after but I think something is wrong with my DirectX alpha blend states. Additionally I still need to sort the transparent geometry such that meshes that are farther away get drawn first so that the blending is correct. Another concern is how this plays with shadow mapping; I know solutions exist but I haven&rsquo;t yet explored them.</p>
+<h3 id="mipmapping">Mipmapping</h3>
+<p>As I mentioned above I&rsquo;d like to fix the Moire patterns that are arising in high-detail textures when seen at a distance. Mipmapping can definitely help with this. Parts of this are implemented already but I need to go in and finish up the job.</p>
+<p><img src="/img/cpp-renderer-moire.jpg" alt="Moire"></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h"
+              >Read other posts</span
+            >
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+            
+              <span class="button next">
+                <a href="/projects/puzzle-game/">
+                  <span class="button__text">Puzzle Game</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+    
+      
+        
+
+      
+    
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a
+  href="/"
+  class="logo"
+  style="text-decoration: none;"
+>
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367" />
+</svg>
+</span>
+    <span class="logo__text"
+      >Joshua Manton</span
+    >
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span
+          >© 2020 Powered by
+          <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span
+        >
+        <span
+          >Theme created by
+          <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span
+        >
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
